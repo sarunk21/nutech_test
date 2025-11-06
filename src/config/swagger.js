@@ -1,4 +1,6 @@
 const swaggerJsdoc = require('swagger-jsdoc');
+const dotenv = require('dotenv');
+dotenv.config();
 
 const options = {
   definition: {
@@ -18,7 +20,7 @@ const options = {
         description: 'Development server'
       },
       {
-        url: 'https://nutechtest-production-e2e4.up.railway.app',
+        url: `${process.env.APP_URL}`,
         description: 'Production server'
       }
     ],
