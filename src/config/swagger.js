@@ -34,6 +34,33 @@ const options = {
         }
       },
       schemas: {
+        // Pagination Schema
+        Pagination: {
+          type: 'object',
+          properties: {
+            page: {
+              type: 'integer',
+              description: 'Halaman saat ini',
+              example: 1
+            },
+            limit: {
+              type: 'integer',
+              description: 'Jumlah data per halaman',
+              example: 10
+            },
+            total: {
+              type: 'integer',
+              description: 'Total semua data',
+              example: 100
+            },
+            total_pages: {
+              type: 'integer',
+              description: 'Total halaman',
+              example: 10
+            }
+          }
+        },
+        
         // Success Response Schemas
         SuccessResponse: {
           type: 'object',
@@ -208,9 +235,18 @@ const options = {
               example: 'Sukses'
             },
             data: {
-              type: 'array',
-              items: {
-                $ref: '#/components/schemas/Banner'
+              type: 'object',
+              properties: {
+                data: {
+                  type: 'array',
+                  description: 'Array of banner objects',
+                  items: {
+                    $ref: '#/components/schemas/Banner'
+                  }
+                },
+                pagination: {
+                  $ref: '#/components/schemas/Pagination'
+                }
               }
             }
           }
@@ -252,9 +288,18 @@ const options = {
               example: 'Sukses'
             },
             data: {
-              type: 'array',
-              items: {
-                $ref: '#/components/schemas/Service'
+              type: 'object',
+              properties: {
+                data: {
+                  type: 'array',
+                  description: 'Array of service objects',
+                  items: {
+                    $ref: '#/components/schemas/Service'
+                  }
+                },
+                pagination: {
+                  $ref: '#/components/schemas/Pagination'
+                }
               }
             }
           }
@@ -421,19 +466,15 @@ const options = {
             data: {
               type: 'object',
               properties: {
-                offset: {
-                  type: 'integer',
-                  example: 0
-                },
-                limit: {
-                  type: 'integer',
-                  example: 3
-                },
-                records: {
+                data: {
                   type: 'array',
+                  description: 'Array of transaction history objects',
                   items: {
                     $ref: '#/components/schemas/TransactionHistory'
                   }
+                },
+                pagination: {
+                  $ref: '#/components/schemas/Pagination'
                 }
               }
             }

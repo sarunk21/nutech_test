@@ -207,27 +207,29 @@ transactionRouter.post('/', authMiddleware, transactionController.transactionPay
  * @swagger
  * /transaction/history:
  *   get:
- *     summary: Get Transaction History
+ *     summary: Get Transaction History with Pagination
  *     tags: [Module Transaction]
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - name: offset
+ *       - name: page
  *         in: query
- *         description: Offset transaksi (default 0)
+ *         description: Halaman yang ingin ditampilkan (default 1)
  *         required: false
  *         schema:
  *           type: integer
- *           default: 0
- *           example: 0
+ *           minimum: 1
+ *           default: 1
+ *           example: 1
  *       - name: limit
  *         in: query
- *         description: Jumlah transaksi yang diambil (default 10)
+ *         description: Jumlah data per halaman (default 10)
  *         required: false
  *         schema:
  *           type: integer
+ *           minimum: 1
  *           default: 10
- *           example: 3
+ *           example: 10
  *     responses:
  *       200:
  *         description: Sukses mendapatkan history transaksi
@@ -242,9 +244,7 @@ transactionRouter.post('/', authMiddleware, transactionController.transactionPay
  *                   status: 0
  *                   message: Get History Berhasil
  *                   data:
- *                     offset: 0
- *                     limit: 3
- *                     records:
+ *                     data:
  *                       - invoice_number: INV17082023-001
  *                         transaction_type: TOPUP
  *                         description: Top Up balance
@@ -260,6 +260,11 @@ transactionRouter.post('/', authMiddleware, transactionController.transactionPay
  *                         description: Listrik
  *                         total_amount: 10000
  *                         created_on: 2023-08-17T12:10:10.000Z
+ *                     pagination:
+ *                       page: 1
+ *                       limit: 10
+ *                       total: 100
+ *                       total_pages: 10
  *       401:
  *         description: Unauthorized - Token tidak valid atau kadaluwarsa
  *         content:

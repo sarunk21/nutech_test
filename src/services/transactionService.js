@@ -81,14 +81,15 @@ class TransactionService {
   }
 
   /**
-   * Get all transactions by user ID
+   * Get all transactions by user ID with pagination
    * @param {Number} userId - User ID
-   * @param {Number} offset - Offset for pagination
+   * @param {Number} page - Page number
    * @param {Number} limit - Limit for pagination
-   * @returns {Promise<Array>} Array of transactions
+   * @returns {Promise<Object>} Object with transactions data and pagination info
    */
-  async getTransactionsByUserId(userId, offset = 0, limit = 10) {
-    const transactions = await transactionRepository.findAll(userId, offset, limit);
+  async getTransactionsByUserId(userId, page = 1, limit = 10) {
+    const transactions = await transactionRepository.findAll(userId, page, limit);
+    const total = await transactionRepository.countByUserId(userId);
 
     // Format transactions untuk response
     const formattedTransactions = await Promise.all(transactions.map(async (transaction) => {
@@ -110,7 +111,15 @@ class TransactionService {
       };
     }));
 
-    return formattedTransactions;
+    return {
+      data: formattedTransactions,
+      pagination: {
+        page,
+        limit,
+        total,
+        total_pages: Math.ceil(total / limit)
+      }
+    };
   }
 
   /**

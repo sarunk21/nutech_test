@@ -66,31 +66,27 @@ class TransactionController {
   }
 
   /**
-   * Get transactions by user ID
-   * GET /transaction/history
+   * Get transactions by user ID with pagination
+   * GET /transaction/history?page=1&limit=10
    */
   async getTransactionsByUserId(req, res) {
     try {
       const userId = req.user.id;
-      const offset = parseInt(req.query.offset) || 0;
+      const page = parseInt(req.query.page) || 1;
       const limit = parseInt(req.query.limit) || 10;
 
-      // Validasi offset dan limit
-      if (isNaN(offset) || offset < 0) {
-        return ResponseHelper.error(res, 'Parameter offset hanya boleh angka dan tidak boleh lebih kecil dari 0', 400);
+      // Validasi page dan limit
+      if (isNaN(page) || page < 1) {
+        return ResponseHelper.error(res, 'Parameter page harus berupa angka positif', 400);
       }
 
-      if (isNaN(limit) || limit < 0) {
-        return ResponseHelper.error(res, 'Parameter limit hanya boleh angka dan tidak boleh lebih kecil dari 0', 400);
+      if (isNaN(limit) || limit < 1) {
+        return ResponseHelper.error(res, 'Parameter limit harus berupa angka positif', 400);
       }
 
-      const transactions = await transactionService.getTransactionsByUserId(userId, offset, limit);
+      const result = await transactionService.getTransactionsByUserId(userId, page, limit);
 
-      return ResponseHelper.success(res, {
-        offset,
-        limit,
-        records: transactions
-      }, 'Get History Berhasil');
+      return ResponseHelper.success(res, result, 'Get History Berhasil');
     } catch (error) {
       return ResponseHelper.error(res, error.message, 500);
     }

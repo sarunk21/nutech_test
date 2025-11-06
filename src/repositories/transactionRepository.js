@@ -6,18 +6,32 @@ const db = require('../config/database');
  */
 class TransactionRepository {
     /**
-     * Get all transactions
+     * Get all transactions with pagination
      * @param {Number} userId - User ID
-     * @param {Number} offset - Offset of transactions
-     * @param {Number} limit - Limit of transactions
+     * @param {Number} page - Page number (starting from 1)
+     * @param {Number} limit - Limit of transactions per page
      * @returns {Promise<Array>} Array of transactions
      */
-    async findAll(userId, offset = 0, limit = 10) {
+    async findAll(userId, page = 1, limit = 10) {
+        const offset = (page - 1) * limit;
         const [rows] = await db.query(
             'SELECT id, user_id, service_id, transaction_type, total_amount, invoice_number, created_at, updated_at FROM transactions WHERE user_id = ? ORDER BY created_at DESC LIMIT ?, ?',
             [userId, offset, limit]
         );
         return rows;
+    }
+
+    /**
+     * Count total transactions by user ID
+     * @param {Number} userId - User ID
+     * @returns {Promise<Number>} Total count of transactions
+     */
+    async countByUserId(userId) {
+        const [rows] = await db.query(
+            'SELECT COUNT(*) as total FROM transactions WHERE user_id = ?',
+            [userId]
+        );
+        return rows[0].total;
     }
 
     /**

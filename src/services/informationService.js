@@ -7,34 +7,60 @@ const serviceRepository = require('../repositories/serviceRepository');
  */
 class InformationService {
   /**
-   * Get all banners
-   * @returns {Promise<Array>} Array of banners
+   * Get all banners with pagination
+   * @param {Number} page - Page number
+   * @param {Number} limit - Limit per page
+   * @returns {Promise<Object>} Object with banners data and pagination info
    */
-  async getAllBanners() {
-    const banners = await bannerRepository.findAll();
+  async getAllBanners(page = 1, limit = 10) {
+    const banners = await bannerRepository.findAll(page, limit);
+    const total = await bannerRepository.count();
     
     // Format response sesuai dengan dokumentasi
-    return banners.map(banner => ({
+    const formattedBanners = banners.map(banner => ({
       banner_name: banner.banner_name,
       banner_image: `${process.env.APP_URL}/uploads/${banner.banner_image}`,
       description: banner.description || ''
     }));
+
+    return {
+      data: formattedBanners,
+      pagination: {
+        page,
+        limit,
+        total,
+        total_pages: Math.ceil(total / limit)
+      }
+    };
   }
 
   /**
-   * Get all services
-   * @returns {Promise<Array>} Array of services
+   * Get all services with pagination
+   * @param {Number} page - Page number
+   * @param {Number} limit - Limit per page
+   * @returns {Promise<Object>} Object with services data and pagination info
    */
-  async getAllServices() {
-    const services = await serviceRepository.findAll();
+  async getAllServices(page = 1, limit = 10) {
+    const services = await serviceRepository.findAll(page, limit);
+    const total = await serviceRepository.count();
     
     // Format response sesuai dengan dokumentasi
-    return services.map(service => ({
+    const formattedServices = services.map(service => ({
       service_code: service.service_code,
       service_name: service.service_name,
       service_icon: `${process.env.APP_URL}/uploads/${service.service_icon}`,
       service_tariff: service.service_tariff
     }));
+
+    return {
+      data: formattedServices,
+      pagination: {
+        page,
+        limit,
+        total,
+        total_pages: Math.ceil(total / limit)
+      }
+    };
   }
 }
 
