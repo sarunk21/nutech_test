@@ -9,7 +9,7 @@ class JWTHelper {
    */
   static generateAccessToken(payload) {
     return jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: process.env.JWT_EXPIRE || '24h'
+      expiresIn: process.env.JWT_EXPIRE || '12h'
     });
   }
 

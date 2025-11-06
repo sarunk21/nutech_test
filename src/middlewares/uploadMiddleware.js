@@ -25,15 +25,15 @@ const storage = multer.diskStorage({
   }
 });
 
-// File filter - only allow images
+// File filter - only allow jpeg and png images
 const fileFilter = (req, file, cb) => {
-  const allowedMimeTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+  const allowedMimeTypes = ['image/jpeg', 'image/png'];
   console.log(`File filter check - MIME type: ${file.mimetype}`);
 
   if (allowedMimeTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    cb(new Error('Format gambar tidak sesuai. Hanya JPEG, JPG, atau PNG yang diperbolehkan'), false);
+    cb(new Error('Format Image tidak sesuai'), false);
   }
 };
 

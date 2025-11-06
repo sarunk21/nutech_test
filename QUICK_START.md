@@ -22,7 +22,7 @@ DB_PORT=3306
 
 # JWT Configuration (generate dengan: openssl rand -base64 32)
 JWT_SECRET=your_super_secret_jwt_key_here_change_this_in_production
-JWT_EXPIRE=24h
+JWT_EXPIRE=12h
 
 # Server Configuration
 PORT=3000
@@ -91,3 +91,9 @@ Sistem menyimpan **hanya path/filename** di database, bukan full URL:
 - **Response API:** `http://localhost:3000/uploads/profiles/profile-1-1234567890.jpg`
 
 Full URL dibuat dengan formula: `APP_URL + /uploads/profiles/ + filename`
+
+**Format Image yang diperbolehkan:**
+- ✅ JPEG (.jpg, .jpeg)
+- ✅ PNG (.png)
+- ❌ Format lainnya akan ditolak dengan pesan: "Format Image tidak sesuai"
+- 📦 Maksimal ukuran file: 2MB
