@@ -42,6 +42,24 @@ app.use('/uploads', express.static(staticPath, {
 // Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
+// Root route - Simple landing page
+app.get('/', (req, res) => {
+  res.send(`
+    <h1>Nutech Test API</h1>
+    <p>Server is running on port ${PORT}</p>
+    <ul>
+      <li><a href="/api-docs">API Documentation (Swagger)</a></li>
+      <li><a href="/health">Health Check</a></li>
+    </ul>
+    <p>Untuk testing API, gunakan:</p>
+    <ul>
+      <li>Swagger UI (link di atas)</li>
+      <li>Postman</li>
+      <li>cURL / HTTPie</li>
+    </ul>
+  `);
+});
+
 // Health check
 app.get('/health', (req, res) => {
   res.json({
