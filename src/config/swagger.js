@@ -233,7 +233,7 @@ const options = {
             data: {
               type: 'object',
               properties: {
-                data: {
+                items: {
                   type: 'array',
                   description: 'Array of banner objects',
                   items: {
@@ -286,7 +286,7 @@ const options = {
             data: {
               type: 'object',
               properties: {
-                data: {
+                items: {
                   type: 'array',
                   description: 'Array of service objects',
                   items: {
@@ -462,7 +462,7 @@ const options = {
             data: {
               type: 'object',
               properties: {
-                data: {
+                items: {
                   type: 'array',
                   description: 'Array of transaction history objects',
                   items: {

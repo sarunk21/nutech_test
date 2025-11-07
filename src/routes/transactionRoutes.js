@@ -244,7 +244,7 @@ transactionRouter.post('/', authMiddleware, transactionController.transactionPay
  *                   status: 0
  *                   message: Get History Berhasil
  *                   data:
- *                     data:
+ *                     items:
  *                       - invoice_number: INV17082023-001
  *                         transaction_type: TOPUP
  *                         description: Top Up balance

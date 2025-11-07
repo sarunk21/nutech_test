@@ -51,7 +51,7 @@ const bannerRouter = express.Router();
  *                   status: 0
  *                   message: Sukses
  *                   data:
- *                     data:
+ *                     items:
  *                       - banner_name: Banner 1
  *                         banner_image: https://nutech-integrasi.app/dummy.jpg
  *                         description: Lerem Ipsum Dolor sit amet
@@ -113,7 +113,7 @@ const serviceRouter = express.Router();
  *                   status: 0
  *                   message: Sukses
  *                   data:
- *                     data:
+ *                     items:
  *                       - service_code: PAJAK
  *                         service_name: Pajak PBB
  *                         service_icon: https://nutech-integrasi.app/dummy.jpg
