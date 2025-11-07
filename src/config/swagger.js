@@ -16,10 +16,6 @@ const options = {
     },
     servers: [
       {
-        url: 'http://localhost:3000',
-        description: 'Development server'
-      },
-      {
         url: `${process.env.APP_URL}`,
         description: 'Production server'
       }
