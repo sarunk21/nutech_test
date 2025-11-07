@@ -112,7 +112,7 @@ class TransactionService {
     }));
 
     return {
-      data: formattedTransactions,
+      items: formattedTransactions,
       pagination: {
         page,
         limit,

@@ -24,7 +24,7 @@ class InformationService {
     }));
 
     return {
-      data: formattedBanners,
+      items: formattedBanners,
       pagination: {
         page,
         limit,
@@ -53,7 +53,7 @@ class InformationService {
     }));
 
     return {
-      data: formattedServices,
+      items: formattedServices,
       pagination: {
         page,
         limit,
